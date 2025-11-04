@@ -13,6 +13,13 @@ public class NewsAgency {
         return true;
     }
 
+    public boolean isContactTaken(String contact) {
+        for (Subscriber s : subscribers) {
+            if (s.contact().equalsIgnoreCase(contact)) return true;
+        }
+        return false;
+    }
+
     public boolean unregister(Subscriber sub) {
         if (sub == null) return false;
         boolean ok = subscribers.remove(sub);

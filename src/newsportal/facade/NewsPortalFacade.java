@@ -3,6 +3,7 @@ package newsportal.facade;
 import newsportal.article_builder.*;
 import newsportal.observer.*;
 import newsportal.strategy.*;
+import newsportal.factory.NotificationStrategyFactory;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import static newsportal.Validation.*;
 public final class NewsPortalFacade {
 
     private final NewsAgency agency;
+
     public NewsAgency getAgency(){ return agency; }
 
 
@@ -19,12 +21,7 @@ public final class NewsPortalFacade {
     }
 
     private NotificationStrategy createWrapped(String kind) {
-        return switch (kind.toUpperCase()) {
-            case "EMAIL" -> new EmailStrategy();
-            case "SMS"   -> new SMSStrategy();
-            case "PUSH"  -> new PushStrategy();
-            default -> throw new IllegalArgumentException("Unknown channel: " + kind);
-        };
+        return NotificationStrategyFactory.create(kind);
     }
 
     private void validateContactForChannel(String kind, String contact) {
@@ -40,6 +37,11 @@ public final class NewsPortalFacade {
     public Subscriber quickRegister(String name, String contact, String channelKind) {
         require(isNonBlank(name), "name required");
         validateContactForChannel(channelKind, contact);
+
+        if (agency.isContactTaken(contact)) {
+            throw new IllegalArgumentException("This contact is already registered");
+        }
+
         var start = createWrapped(channelKind);
         var s = new Subscriber(name, contact, start);
 
@@ -64,24 +66,14 @@ public final class NewsPortalFacade {
     public void post(String title, String content, Category category,
                      String author, String summary, List<String> tags, int priority) {
         Article art = new ArticleBuilder()
-                .title(title)
-                .content(content)
-                .category(category)
-                .author(author)
-                .summary(summary)
-                .tags(tags)
-                .priority(2)
+                .title(title).content(content).category(category)
+                .author(author).summary(summary).tags(tags).priority(priority)
                 .build();
-        agency.publish(art);
+        post(art);
     }
 
     public void post(String title, String content, Category category) {
-        Article a = new ArticleBuilder()
-                .title(title)
-                .content(content)
-                .category(category)
-                .build();
-        agency.publish(a);
+        post(new ArticleBuilder().title(title).content(content).category(category).build());
     }
 
 }

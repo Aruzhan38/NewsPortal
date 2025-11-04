@@ -14,16 +14,15 @@ public final class NotificationStrategyFactory {
 
         String type = kind.trim().toUpperCase();
 
-        return switch (type) {
+        NotificationStrategy base = switch (type) {
             case "SMS" -> new SMSStrategy();
             case "PUSH" -> new PushStrategy();
             case "EMAIL" -> new EmailStrategy();
             default -> {
                 System.out.println("Unknown strategy type: " + kind + " - defaulting to EMAIL.");
                 yield new EmailStrategy();
-            }
-
-        };
+            } };
+        return new newsportal.decorator.LoggingStrategyDecorator(base);
     }
 
 }

@@ -30,7 +30,7 @@ public class Subscriber {
         if (strategy != null) {
             strategy.send(name, contact, article);
         } else {
-            System.out.println( name + "has no delivery strategy set.");
+            System.out.println(name + "has no delivery strategy set.");
         }
     }
 
