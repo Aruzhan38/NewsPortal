@@ -3,6 +3,7 @@ package newsportal.article_builder;
 import java.time.LocalDateTime;
 import java.util.List;
 
+//helps to construct articles step by step
 public final class ArticleBuilder {
     private String title;
     private String content;
@@ -23,6 +24,7 @@ public final class ArticleBuilder {
     public ArticleBuilder publishedAt(LocalDateTime publishedAt) { this.publishedAt = publishedAt; return this; }
 
     public Article build() {
+        // Тексеру / маңызды ақпараттар бос болмауы қажет
         if (title == null || title.isBlank()) {
             throw new IllegalStateException("Title cannot be empty.");
         }
@@ -32,9 +34,9 @@ public final class ArticleBuilder {
         if (category == null) {
             throw new IllegalStateException("Choose a category for the article.");
         }
-
+        // Егер мақаланың шығу уақыты алдын ала берілмесе, қазіргі уақытты шығарады
         LocalDateTime time = (publishedAt == null) ? LocalDateTime.now() : publishedAt;
-
+        // дайын Article object
         return new Article(title, content, category, author, summary, tags, priority, time);
     }
 

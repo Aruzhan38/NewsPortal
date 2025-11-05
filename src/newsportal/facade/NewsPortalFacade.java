@@ -9,6 +9,7 @@ import java.util.List;
 
 import static newsportal.Validation.*;
 
+// hides all complexity
 public final class NewsPortalFacade {
 
     private final NewsAgency agency;
@@ -41,10 +42,11 @@ public final class NewsPortalFacade {
         if (agency.isContactTaken(contact)) {
             throw new IllegalArgumentException("This contact is already registered");
         }
-
+        // Factory паттерн арқылы стратегия құрастыру
         var start = createWrapped(channelKind);
         var s = new Subscriber(name, contact, start);
 
+        // register the subscriber with the central Agency
         if (agency.register(s)) {
             System.out.println("Registered: " + s);
         }
@@ -60,11 +62,14 @@ public final class NewsPortalFacade {
     }
 
     public void post(Article article) {
+        // Мақала шыққаны туралы оқырмандарға хабар беру
         agency.publish(article);
+        // Мақаланы файлға сақтау
         ArticleStorage.save(article);
     }
     public void post(String title, String content, Category category,
                      String author, String summary, List<String> tags, int priority) {
+        // Builder арқылы construct the complex object
         Article art = new ArticleBuilder()
                 .title(title).content(content).category(category)
                 .author(author).summary(summary).tags(tags).priority(priority)

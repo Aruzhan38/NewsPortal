@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// handles registration, changing strategy, and unsubscribing
 public class SubscriberFeature {
     private final NewsAgency agency;
     private final NewsPortalFacade portal;
+
+    // список объектов Subscriber
     private final List<Subscriber> subscribers = new ArrayList<>();
 
     public SubscriberFeature(NewsAgency agency, NewsPortalFacade portal) {
@@ -31,6 +34,7 @@ public class SubscriberFeature {
         }
     }
 
+    // смена стратегии
     public void changeDelivery(Scanner in) {
         String name = promptNonBlank(in, "Enter subscriber name: ");
         Subscriber s = findByName(name);
@@ -58,6 +62,7 @@ public class SubscriberFeature {
         for (Subscriber s : subscribers) System.out.println("• " + s);
     }
 
+    // быстрый поиск подписчиков по имени
     private Subscriber findByName(String name) {
         for (Subscriber s : subscribers)
             if (s.name().equalsIgnoreCase(name)) return s;
@@ -73,6 +78,7 @@ public class SubscriberFeature {
         }
     }
 
+    // синонимы
     private static String readChannel(Scanner in) {
         while (true) {
             System.out.print("Delivery channel (EMAIL / SMS / PUSH): ");
@@ -86,6 +92,7 @@ public class SubscriberFeature {
         }
     }
 
+    // валидация
     private static String readContactForChannel(Scanner in, String channel) {
         while (true) {
             System.out.print("Contact (" + channel + "): ");

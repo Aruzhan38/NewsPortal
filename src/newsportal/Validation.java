@@ -2,6 +2,7 @@ package newsportal;
 
 import java.util.regex.Pattern;
 
+// helper class for input validation
 public final class Validation {
 
     private Validation() {}
@@ -28,6 +29,7 @@ public final class Validation {
         return notBlank(s) && s.trim().length() >= 6;
     }
 
+    // быстрая проверка входных данных перед выполнением бизнес-логики
     public static void require(boolean condition, String message) {
         if (!condition) {
             throw new IllegalArgumentException(message);

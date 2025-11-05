@@ -2,6 +2,7 @@ package newsportal.factory;
 
 import newsportal.strategy.*;
 
+// creates the right notification strategy
 public final class NotificationStrategyFactory {
 
     private NotificationStrategyFactory() {
@@ -9,7 +10,7 @@ public final class NotificationStrategyFactory {
 
     public static NotificationStrategy create(String kind) {
         if (kind == null || kind.isBlank()) {
-            return new EmailStrategy();
+            return new EmailStrategy(); //default
         }
 
         String type = kind.trim().toUpperCase();
@@ -22,6 +23,7 @@ public final class NotificationStrategyFactory {
                 System.out.println("Unknown strategy type: " + kind + " - defaulting to EMAIL.");
                 yield new EmailStrategy();
             } };
+        // integration of the decorator pattern
         return new newsportal.decorator.LoggingStrategyDecorator(base);
     }
 

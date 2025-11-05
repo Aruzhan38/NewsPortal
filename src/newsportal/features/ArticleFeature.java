@@ -6,10 +6,9 @@ import newsportal.facade.NewsPortalFacade;
 import java.util.List;
 import java.util.Scanner;
 
+// handles everything related to publishing and viewing articles
 public class ArticleFeature {
     private final NewsPortalFacade portal;
-
-
 
     public ArticleFeature(NewsPortalFacade portal) {
         this.portal = portal;
@@ -38,14 +37,10 @@ public class ArticleFeature {
                 .build();
 
         portal.post(a);
-        PublishedCache.ARTICLES.add(a);
-    }
-
-    class PublishedCache {
-        static final java.util.List<Article> ARTICLES = new java.util.ArrayList<>();
     }
 
     public void viewPublished(Scanner in) {
+        // reading saved article lines from storage
         var lines = ArticleStorage.readAll();
         if (lines.isEmpty()) {
             System.out.println("\nNo articles published yet.");
@@ -55,31 +50,9 @@ public class ArticleFeature {
         for (int i = 0; i < lines.size(); i++) {
             System.out.println((i + 1) + ". " + lines.get(i));
         }
-        System.out.print("Filter by category (Enter to skip): ");
-        String f = in.nextLine().trim().toUpperCase();
-        if (!f.isBlank()) {
-            lines.stream()
-                    .filter(line -> line.startsWith("[" + f + "]"))
-                    .forEach(System.out::println);
-        } else {
-            for (int i=0;i<lines.size();i++) System.out.println((i+1)+". "+lines.get(i));
-        }
-
-        System.out.print("\nEnter number for details (Enter to skip): ");
-        String s = in.nextLine().trim();
-        if (!s.isBlank()) {
-            int idx = Integer.parseInt(s) - 1;
-            if (idx >= 0 && idx < PublishedCache.ARTICLES.size()) {
-                var art = PublishedCache.ARTICLES.get(idx);
-                System.out.println("\n" + art.title()
-                        + "\nCategory: " + art.category()
-                        + "\nAuthor: " + (art.author()==null? "Unknown": art.author())
-                        + "\nPublished: " + art.publishedAt()
-                        + "\n\n" + art.content());
-            }
-        }
     }
 
+    // повторяет запрос до тех пор, пока пользователь не введет непустое значение
     private static String promptNonBlank(Scanner in, String label) {
         while (true) {
             System.out.print(label);
@@ -89,6 +62,7 @@ public class ArticleFeature {
         }
     }
 
+    // повторяет запрос, пока пользователь не введет действительное значение из Category
     private static Category askCategory(Scanner in) {
         while (true) {
             System.out.print("Category (LOCAL/WORLD/TECH/EDUCATION/HEALTH/BUSINESS/SPORTS/CULTURE/ENTERTAINMENT/POLITICS/SCIENCE/MEDIA): ");

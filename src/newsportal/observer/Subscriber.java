@@ -3,6 +3,7 @@ package newsportal.observer;
 import newsportal.article_builder.Article;
 import newsportal.strategy.NotificationStrategy;
 
+// the observer, receives updates through the chosen notification strategy
 public class Subscriber {
     private final String name;
     private String contact;
@@ -18,10 +19,10 @@ public class Subscriber {
     public String contact() { return contact; }
     public NotificationStrategy strategy() { return strategy; }
 
+    // можно поменять стратегию и контактные данные
     public void setStrategy(NotificationStrategy strategy) {
         this.strategy = strategy;
     }
-
     public void setContact(String contact) {
         this.contact = contact;
     }

@@ -7,6 +7,7 @@ import newsportal.observer.NewsAgency;
 
 import java.util.Scanner;
 
+// entry point
 public class Main {
 
     public static void main(String[] args) {

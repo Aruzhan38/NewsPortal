@@ -3,6 +3,7 @@ package newsportal.article_builder;
 import java.time.LocalDateTime;
 import java.util.List;
 
+// model class that holds all article information
 public class Article {
     private final String title;
     private final String content;

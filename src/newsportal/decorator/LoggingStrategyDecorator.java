@@ -6,6 +6,7 @@ import newsportal.strategy.NotificationStrategy;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+// wraps around a notification strategy
 public class LoggingStrategyDecorator implements NotificationStrategy {
 
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -15,6 +16,7 @@ public class LoggingStrategyDecorator implements NotificationStrategy {
         this.wrapped = wrapped;
     }
 
+    // қандай мақала қандай стратегия арқылы оқырманға жетеді
     @Override
     public void send(String recipientName, String contact, Article article) {
         String now = LocalTime.now().format(fmt);
