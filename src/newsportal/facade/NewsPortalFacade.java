@@ -35,7 +35,7 @@ public final class NewsPortalFacade {
     }
 
     public Subscriber quickRegister(String name, String contact, String channelKind) {
-        require(isNonBlank(name), "name required");
+        require(notBlank(name), "name required");
         validateContactForChannel(channelKind, contact);
 
         if (agency.isContactTaken(contact)) {
@@ -55,7 +55,7 @@ public final class NewsPortalFacade {
         validateContactForChannel(newChannelKind, newContact);
         subscriber.setStrategy(createWrapped(newChannelKind));
         subscriber.setContact(newContact);
-        System.out.println("🔄 " + subscriber.name() + " -> " + subscriber.strategy().name()
+        System.out.println("Update: " + subscriber.name() + " -> " + subscriber.strategy().name()
                 + " (" + subscriber.contact() + ")");
     }
 

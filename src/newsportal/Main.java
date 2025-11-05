@@ -17,7 +17,7 @@ public class Main {
         var subs = new SubscriberFeature(agency, portal);
         var arts = new ArticleFeature(portal);
 
-        System.out.println("=== 📰 INTERACTIVE NEWS PORTAL SYSTEM ===\n");
+        System.out.println(" INTERACTIVE NEWS PORTAL SYSTEM \n");
 
         int num = askPositiveInt(in, "Enter number of subscribers: ");
         subs.initialRegistration(in, num);
@@ -41,8 +41,8 @@ public class Main {
                 case "4" -> arts.viewPublished(in);
                 case "5" -> subs.initialRegistration(in, 1);
                 case "6" -> subs.listSubscribers();
-                case "0" -> { System.out.println("👋 Exiting program..."); in.close(); return; }
-                default -> System.out.println("⚠️ Invalid option, please try again!");
+                case "0" -> { System.out.println("Exiting program..."); in.close(); return; }
+                default -> System.out.println(" Invalid option, please try again!");
             }
         }
     }
@@ -53,9 +53,9 @@ public class Main {
             System.out.print(label);
             try {
                 n = Integer.parseInt(in.nextLine().trim());
-                if (n <= 0) System.out.println("⚠️ Must be positive.");
+                if (n <= 0) System.out.println(" Must be positive.");
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Not a number. Try again.");
+                System.out.println(" Not a number. Try again.");
             }
         }
         return n;

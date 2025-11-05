@@ -3,18 +3,34 @@ package newsportal;
 import java.util.regex.Pattern;
 
 public final class Validation {
+
     private Validation() {}
 
-    private static final Pattern EMAIL = Pattern.compile("^[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}$");
-    private static final Pattern PHONE = Pattern.compile("^\\+?\\d[\\d\\s()-]{6,}$");
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}$");
 
-    public static boolean isNonBlank(String s) { return s != null && !s.isBlank(); }
+    private static final Pattern PHONE_PATTERN =
+            Pattern.compile("^\\+?\\d[\\d\\s()-]{6,}$");
 
-    public static boolean isEmail(String s) { return isNonBlank(s) && EMAIL.matcher(s).matches(); }
-    public static boolean isPhone(String s) { return isNonBlank(s) && PHONE.matcher(s).matches(); }
-    public static boolean isToken(String s) { return isNonBlank(s) && s.trim().length() >= 6; }
+    public static boolean notBlank(String s) {
+        return s != null && !s.isBlank();
+    }
 
-    public static void require(boolean cond, String message) {
-        if (!cond) throw new IllegalArgumentException(message);
+    public static boolean isEmail(String s) {
+        return notBlank(s) && EMAIL_PATTERN.matcher(s).matches();
+    }
+
+    public static boolean isPhone(String s) {
+        return notBlank(s) && PHONE_PATTERN.matcher(s).matches();
+    }
+
+    public static boolean isToken(String s) {
+        return notBlank(s) && s.trim().length() >= 6;
+    }
+
+    public static void require(boolean condition, String message) {
+        if (!condition) {
+            throw new IllegalArgumentException(message);
+        }
     }
 }

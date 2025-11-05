@@ -51,11 +51,11 @@ public class ArticleFeature {
             System.out.println("\nNo articles published yet.");
             return;
         }
-        System.out.println("\n=== 🗞️ Published Articles ===");
+        System.out.println("\n Published Articles ");
         for (int i = 0; i < lines.size(); i++) {
             System.out.println((i + 1) + ". " + lines.get(i));
         }
-        System.out.print("Filter by category (or Enter to skip): ");
+        System.out.print("Filter by category (Enter to skip): ");
         String f = in.nextLine().trim().toUpperCase();
         if (!f.isBlank()) {
             lines.stream()
@@ -71,9 +71,9 @@ public class ArticleFeature {
             int idx = Integer.parseInt(s) - 1;
             if (idx >= 0 && idx < PublishedCache.ARTICLES.size()) {
                 var art = PublishedCache.ARTICLES.get(idx);
-                System.out.println("\n📰 " + art.title()
+                System.out.println("\n" + art.title()
                         + "\nCategory: " + art.category()
-                        + "\nAuthor: " + (art.author()==null? "Anonymous": art.author())
+                        + "\nAuthor: " + (art.author()==null? "Unknown": art.author())
                         + "\nPublished: " + art.publishedAt()
                         + "\n\n" + art.content());
             }
@@ -85,7 +85,7 @@ public class ArticleFeature {
             System.out.print(label);
             String s = in.nextLine().trim();
             if (!s.isBlank()) return s;
-            System.out.println("❌ Value cannot be blank. Try again.");
+            System.out.println("Value cannot be blank. Try again.");
         }
     }
 
@@ -94,7 +94,7 @@ public class ArticleFeature {
             System.out.print("Category (LOCAL/WORLD/TECH/EDUCATION/HEALTH/BUSINESS/SPORTS/CULTURE/ENTERTAINMENT/POLITICS/SCIENCE/MEDIA): ");
             String raw = in.nextLine().trim().toUpperCase();
             try { return Category.valueOf(raw); }
-            catch (IllegalArgumentException e) { System.out.println("⚠️ Unknown category. Try again."); }
+            catch (IllegalArgumentException e) { System.out.println("Unknown category. Try again."); }
         }
     }
 }

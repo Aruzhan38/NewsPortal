@@ -23,15 +23,20 @@ public final class ArticleBuilder {
     public ArticleBuilder publishedAt(LocalDateTime publishedAt) { this.publishedAt = publishedAt; return this; }
 
     public Article build() {
-        if (title == null || title.isBlank())
-            throw new IllegalStateException("Article title is required");
-        if (content == null || content.isBlank())
-            throw new IllegalStateException("Article content is required");
-        if (category == null)
-            throw new IllegalStateException("Article category is required");
+        if (title == null || title.isBlank()) {
+            throw new IllegalStateException("Title cannot be empty.");
+        }
+        if (content == null || content.isBlank()) {
+            throw new IllegalStateException("Content must be provided.");
+        }
+        if (category == null) {
+            throw new IllegalStateException("Choose a category for the article.");
+        }
 
-        return new Article(title, content, category, author, summary, tags, priority,
-                publishedAt == null ? LocalDateTime.now() : publishedAt
-        );
+        LocalDateTime time = (publishedAt == null) ? LocalDateTime.now() : publishedAt;
+
+        return new Article(title, content, category, author, summary, tags, priority, time);
     }
+
 }
+

@@ -34,7 +34,7 @@ public class SubscriberFeature {
     public void changeDelivery(Scanner in) {
         String name = promptNonBlank(in, "Enter subscriber name: ");
         Subscriber s = findByName(name);
-        if (s == null) { System.out.println("❌ Subscriber not found!"); return; }
+        if (s == null) { System.out.println("Subscriber not found!"); return; }
 
         String newKind = readChannel(in);
         String newContact = readContactForChannel(in, newKind);
@@ -47,7 +47,7 @@ public class SubscriberFeature {
     public void unsubscribe(Scanner in) {
         String name = promptNonBlank(in, "Enter subscriber name to remove: ");
         Subscriber s = findByName(name);
-        if (s == null) { System.out.println("❌ Subscriber not found!"); return; }
+        if (s == null) { System.out.println("Subscriber not found!"); return; }
         agency.unregister(s);
         subscribers.remove(s);
     }
@@ -69,7 +69,7 @@ public class SubscriberFeature {
             System.out.print(label);
             String s = in.nextLine().trim();
             if (!s.isBlank()) return s;
-            System.out.println("❌ Value cannot be blank. Try again.");
+            System.out.println("Value cannot be blank. Try again.");
         }
     }
 
@@ -81,7 +81,7 @@ public class SubscriberFeature {
                 case "EMAIL", "E-MAIL", "MAIL": return "EMAIL";
                 case "SMS", "PHONE", "TEL":     return "SMS";
                 case "PUSH", "TOKEN", "APP":    return "PUSH";
-                default: {  System.out.println("❌ Unknown channel. Please enter EMAIL, SMS, or PUSH.");}
+                default: {  System.out.println("Unknown channel. Please enter EMAIL, SMS, or PUSH.");}
             }
         }
     }
@@ -98,7 +98,7 @@ public class SubscriberFeature {
             };
             if (ok) return contact;
 
-            System.out.println("❌ Invalid " + channel.toLowerCase()
+            System.out.println("Invalid " + channel.toLowerCase()
                     + (channel.equals("EMAIL") ? " (e.g., user@example.com)"
                     : channel.equals("SMS")   ? " (e.g., +77011234567)"
                     : " (e.g., token-xyz12345)"));

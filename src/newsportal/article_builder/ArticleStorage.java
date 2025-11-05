@@ -14,7 +14,7 @@ public class ArticleStorage {
                 Files.createFile(Paths.get(FILE_PATH));
             }
         } catch (IOException e) {
-            System.out.println("⚠️ Could not initialize storage: " + e.getMessage());
+            System.out.println(" Could not initialize storage: " + e.getMessage());
         }
     }
 
@@ -22,7 +22,7 @@ public class ArticleStorage {
         try (FileWriter fw = new FileWriter(FILE_PATH, true)) {
             fw.write(format(article) + System.lineSeparator());
         } catch (IOException e) {
-            System.out.println("⚠️ Error saving article: " + e.getMessage());
+            System.out.println(" Error saving article: " + e.getMessage());
         }
     }
 
@@ -30,7 +30,7 @@ public class ArticleStorage {
         try {
             return Files.readAllLines(Paths.get(FILE_PATH));
         } catch (IOException e) {
-            System.out.println("⚠️ Error reading file: " + e.getMessage());
+            System.out.println(" Error reading file: " + e.getMessage());
             return List.of();
         }
     }

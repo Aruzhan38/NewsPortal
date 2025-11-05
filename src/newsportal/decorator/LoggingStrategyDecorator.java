@@ -9,22 +9,22 @@ import java.time.format.DateTimeFormatter;
 public class LoggingStrategyDecorator implements NotificationStrategy {
 
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private final NotificationStrategy inner;
+    private final NotificationStrategy wrapped;
 
-    public LoggingStrategyDecorator(NotificationStrategy inner) {
-        this.inner = inner;
+    public LoggingStrategyDecorator(NotificationStrategy wrapped) {
+        this.wrapped = wrapped;
     }
 
     @Override
     public void send(String recipientName, String contact, Article article) {
         String now = LocalTime.now().format(fmt);
         System.out.printf("[LOG %s] %s via %s -> \"%s\"%n",
-                now, recipientName, inner.name(), article.title());
-        inner.send(recipientName, contact, article);
+                now, recipientName, wrapped.name(), article.title());
+        wrapped.send(recipientName, contact, article);
     }
 
     @Override
     public String name() {
-        return inner.name();
+        return wrapped.name();
     }
 }
